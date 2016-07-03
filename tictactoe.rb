@@ -15,7 +15,7 @@ class TicTacToe
 
 	#Continues the game until someone wins.
 	def turns
-		while winner?(@gameboard.board) == false || tie_game?(@gameboard.board) == false
+		while winner?(@gameboard.board) == false && tie_game?(@gameboard.board) == false
 			puts "\n\n\n\n\n\n\nIt is now #{@current_player.name}'s turn."
 			puts @gameboard.draw_board
 			@gameboard.update_board(@current_player.side)
@@ -27,7 +27,7 @@ class TicTacToe
 			puts "\n\n\n\n********* Congratulations! #{@current_player.name} wins! *********\n\n\n\n\n\n"
 		else
 			puts @gameboard.draw_board
-			puts "Tie Game!"
+			puts "\n\n**** Tie Game! ****\n\n\n\n\n\n\n"
 		end
 	end
 
@@ -58,11 +58,24 @@ class TicTacToe
 
 	#Method that reads the current game board to see if there is a tie game.
 	def tie_game?(array)
-		3.times do |i|
-			if array[i].none? { |x| x == "{ }"} == true
-				return true
+		1.times do |i|
+			if array[i].any? {|x| x == "{ }"} == true
+				return false
+			else
+				i += 1
+				if array[i].any? {|x| x == "{ }"} == true
+					return false
+				else
+					i += 1
+					if array[i].any? {|x| x == "{ }"} == true
+						return false
+					else
+						return true
+					end
+				end
 			end
 		end
+		false
 	end
 
 
